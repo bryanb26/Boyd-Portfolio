@@ -413,7 +413,7 @@ a.hover-underline:hover:before {
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
-    height: 190vh;
+    height: 200vh;
   }
   .research-container {
     height: 30%;
