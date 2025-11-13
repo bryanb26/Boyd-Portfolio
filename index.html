@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Bryan Boyd — Portfolio</title>
+<link rel="icon" href="data:,">
+<style>
+  :root{
+    --bg:#f4f7fb;
+    --panel:#ffffff;
+    --muted:#64748b;
+    --accent:#2563eb;
+    --card-border: rgba(16,24,40,0.04);
+    --radius:12px;
+    --max-width:1100px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg, #f6f9ff 0%, #eef4ff 100%);
+    color:#0f1724;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.5;
+  }
+
+  header{
+    padding:36px 20px 8px;
+    text-align:center;
+  }
+  header h1{
+    margin:0;
+    font-size:clamp(26px,5vw,36px);
+    letter-spacing:-0.02em;
+    font-weight:700;
+  }
+  header p.lead{
+    margin:10px auto 0;
+    color:var(--muted);
+    max-width:900px;
+  }
+
+  main{
+    max-width:var(--max-width);
+    margin:28px auto;
+    padding:0 20px 60px;
+  }
+
+  /* top area: about + photo */
+  .top {
+    display:flex;
+    gap:20px;
+    align-items:center;
+    margin-bottom:20px;
+  }
+  .about {
+    flex:1 1 60%;
+    background:var(--panel);
+    padding:18px;
+    border-radius:var(--radius);
+    border:1px solid var(--card-border);
+    box-shadow:0 6px 20px rgba(16,24,40,0.04);
+  }
+  .about h2{ margin:0 0 8px; font-size:18px; }
+  .about p{ margin:0; color:var(--muted); }
+
+  .photo {
+    flex:0 0 300px;
+    max-width:300px;
+    border-radius:12px;
+    overflow:hidden;
+    border:1px solid var(--card-border);
+    background:linear-gradient(180deg,#fff,#f7fbff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:6px;
+    box-shadow: 0 6px 24px rgba(16,24,40,0.04);
+  }
+  .photo img{
+    width:100%;
+    height:auto;
+    display:block;
+    border-radius:8px;
+  }
+
+  /* projects list (rounded rectangles stacked) */
+  .projects {
+    margin-top:18px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .project-card {
+    background:var(--panel);
+    border-radius:14px;
+    padding:16px;
+    border:1px solid var(--card-border);
+    display:flex;
+    gap:16px;
+    align-items:flex-start;
+    transition:transform .12s ease, box-shadow .12s ease;
+    text-decoration:none;
+    color:inherit;
+    position:relative;
+  }
+  .project-card:hover{
+    transform:translateY(-4px);
+    box-shadow: 0 12px 30px rgba(16,24,40,0.08);
+  }
+
+  /* LEFT IMAGE (replaces two-letter box). made larger */
+  .project-card .left {
+    flex:0 0 100px;
+    height:100px;
+    width:100px;
+    border-radius:12px;
+    background:linear-gradient(180deg, rgba(37,99,235,0.06), rgba(37,99,235,0.02));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    color:var(--accent);
+    font-size:14px;
+    border:1px solid rgba(37,99,235,0.08);
+    overflow:hidden;
+  }
+  .project-card .left img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    border-radius:10px;
+  }
+
+  .project-card .meta {
+    flex:1;
+  }
+  .project-card h3{
+    margin:0 0 6px 0;
+    font-size:16px;
+  }
+  .project-card p{
+    margin:0;
+    color:var(--muted);
+    font-size:14px;
+  }
+  .project-card .tags{
+    margin-top:8px;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .tag {
+    font-size:12px;
+    padding:6px 8px;
+    border-radius:999px;
+    background:rgba(15,23,42,0.04);
+    color:var(--muted);
+    border:1px solid rgba(15,23,42,0.03);
+  }
+
+  /* edit icon (small pencil) */
+  .edit-icon {
+    position:absolute;
+    top:10px;
+    right:10px;
+    font-size:13px;
+    color:var(--muted);
+    background:transparent;
+    border:0;
+    cursor:pointer;
+    padding:6px;
+    border-radius:8px;
+  }
+  .edit-icon:focus{ outline:2px solid rgba(37,99,235,0.18); }
+
+  /* Passion projects area */
+  .passion {
+    margin-top:28px;
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+    gap:12px;
+  }
+  .passion .card {
+    background:var(--panel);
+    padding:12px;
+    border-radius:12px;
+    border:1px solid var(--card-border);
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .passion h4{ margin:0 0 6px 0; }
+  .passion p{ margin:0; color:var(--muted); font-size:14px; }
+  .passion .card img {
+    width:100%;
+    height:300px;
+    object-fit:cover;
+    border-radius:8px;
+    margin-top:10px;
+    border:1px solid rgba(15,23,42,0.04);
+  }
+
+  footer{
+    margin-top:40px;
+    text-align:center;
+    color:var(--muted);
+    font-size:13px;
+    padding-bottom:48px;
+  }
+
+  /* small screens: stack top */
+  @media (max-width:880px){
+    .top {
+      flex-direction:column-reverse;
+      align-items:stretch;
+    }
+    .photo{ align-self:center; }
+    .project-card {
+      gap:12px;
+    }
+    .project-card .left {
+      flex:0 0 84px;
+      height:84px;
+      width:84px;
+    }
+    .passion .card img {
+      height:120px;
+    }
+  }
+
+  /* Edit links panel (modal-ish) */
+  .overlay {
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(2,6,23,0.45);
+    align-items:center;
+    justify-content:center;
+    z-index:120;
+  }
+  .overlay.open { display:flex; }
+  .panel {
+    width:min(720px,95%);
+    background:var(--panel);
+    border-radius:12px;
+    padding:18px;
+    border:1px solid var(--card-border);
+    box-shadow:0 20px 60px rgba(2,6,23,0.2);
+    max-height:80vh;
+    overflow:auto;
+  }
+  .panel h3 { margin:0 0 12px 0; }
+  .link-row {
+    display:flex;
+    gap:8px;
+    align-items:center;
+    margin-bottom:10px;
+  }
+  .link-row label { min-width:160px; font-size:14px; color:var(--muted); }
+  .link-row input[type="url"]{
+    flex:1;
+    padding:8px 10px;
+    border-radius:8px;
+    border:1px solid var(--card-border);
+    font-size:14px;
+  }
+  .panel .actions { display:flex; gap:8px; justify-content:flex-end; margin-top:12px; }
+  .btn {
+    padding:8px 12px;
+    border-radius:8px;
+    border:0;
+    cursor:pointer;
+    font-weight:600;
+    background:var(--accent);
+    color:#fff;
+  }
+  .btn.ghost {
+    background:transparent;
+    color:var(--muted);
+    border:1px solid rgba(15,23,42,0.06);
+  }
+  .small {
+    padding:6px 8px;
+    font-size:13px;
+  }
+  .note{ font-size:13px; color:var(--muted); margin-top:6px; }
+
+  /* tiny success toast */
+  .toast{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    background:#0f1724;
+    color:#fff;
+    padding:8px 12px;
+    border-radius:10px;
+    box-shadow:0 8px 30px rgba(2,6,23,0.25);
+    display:none;
+    z-index:130;
+  }
+  .toast.show{ display:block; }
+
+  /* tiny utility for header action */
+  .header-actions {
+    margin-top:12px;
+    display:flex;
+    gap:8px;
+    justify-content:center;
+  }
+  .header-actions .small-btn {
+    background:transparent;
+    color:var(--muted);
+    border:1px solid rgba(15,23,42,0.06);
+    padding:8px 10px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+    text-decoration:none;
+  }
+  .section-header {
+    display:flex;
+    gap:12px;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:8px;
+  }
+  .section-header h2 { margin:0; font-size:18px; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Bryan Boyd</h1>
+    <div class="header-actions" aria-hidden="false">
+      <!-- LinkedIn and GitHub links -->
+      <a class="small-btn" href="https://www.linkedin.com/in/bryanpboyd" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a class="small-btn" href="https://github.com/bryboyd" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="top" aria-label="About and photo">
+      <div class="about" id="about">
+        <p>Hi, my name is Bryan and I am a 2nd year graduate student at Duke University conducting research in the Labratory 
+          for Intelligent Systems Technology in the Department of Civil and Environmental Engineering. I am studying both Civil and
+          Electrical Engineering, namely application of IoT systems and machine learning in civil engineering. I did my undergraduate
+          at Princeton University where I graduated summa cum laude in Civil Engineering (structural focus) with a minor in Computer Science.
+          This website hosts some of my current and past research, projects from graduate school, and some passion projects! Clicking on each bubble
+          will lead you to the corresponding code or publication.
+        </p>
+      </div>
+
+      <div class="photo" aria-hidden="false">
+        <!-- Replace "photo.jpg" with your uploaded image filename or an external URL -->
+        <img src="bb.png" alt="Photo of Bry" />
+      </div>
+    </div>
+
+    <!-- New Research section (above Projects) -->
+    <section aria-labelledby="researchHeading" style="margin-bottom:20px;">
+      <div class="section-header">
+        <h2 id="researchHeading">Research</h2>
+      </div>
+
+      <div class="projects" id="researchList">
+        <!-- Research 1 -->
+        <a class="project-card" href="https://www.spiedigitallibrary.org/conference-proceedings-of-spie/13435/134350Y/Embedded-sensing-system-for-shipboard-damage-control-scenarios/10.1117/12.3050331.short" target="_blank" rel="noopener noreferrer"
+           data-id="res-iot" data-title="IoT Sensing for Structural Health Monitoring">
+          <div class="left">
+            <img src="naval.png" alt="IoT sensing thumbnail">
+          </div>
+          <div class="meta">
+            <h3>Embedded sensing system for shipboard damage control scenarios</h3>
+            <p>This is a ongoing projection in our lab group, in which I am applying machine learning and computer vision models to human physiological data (heart rate, skin temperature) from naval
+emergency response training exercises to model response to stressors and predict performance under extreme conditions, and track which room of the ship a participant is currently in.</p>
+            <div class="tags">
+              <span class="tag">Data Analytics</span>
+              <span class="tag">Machine Learning</span>
+              <span class="tag">Python</span>
+              <span class="tag">SQL</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Research 2 -->
+        <a class="project-card" href="https://spie.org/conferences-and-exhibitions/smart-structures-nde/program" target="_blank" rel="noopener noreferrer"
+           data-id="res-ml" data-title="Machine Learning for Damage Detection">
+          <div class="left">
+            <img src="urbano.png" alt="ML damage detection thumbnail">
+          </div>
+          <div class="meta">
+            <h3>Design and Application of a Cloud-Supported LTE Wireless Sensor for Remote Monitoring Applications</h3>
+            <p>Designed and deployed an IoT sensor system including an autonomous wireless CO2 flux chamber and groundwater monitoring sensor for large-scale environmental monitoring
+of peatlands for carbon storage data in peatlands which is sent wirelessly via LTE to an AWS server with Postgres for visualization. This is a current project which will be presented at 
+SPIE Smart Structures and Non-Destructive Evaluation in March 2026.</p>
+            <div class="tags">
+              <span class="tag">Embedded Systems</span>
+              <span class="tag">Low-level Programming</span>
+              <span class="tag">AWS</span>
+              <span class="tag">SQL</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Research 3 -->
+        <a class="project-card" href="https://dataspace.princeton.edu/handle/88435/dsp018049g8433" target="_blank" rel="noopener noreferrer"
+           data-id="res-thesis" data-title="Methods for Identifying and Modeling Strain Anomalies">
+          <div class="left">
+            <img src="streiker.png" alt="Thesis thumbnail">
+          </div>
+          <div class="meta">
+            <h3>Methods for Identifying and Modeling Strain Anomalies in Prestressed Concrete Structures</h3>
+            <p>Completed a year-long senior thesis project focused on a data-driven approach to diagnosing anomalies in reinforced concrete
+structures and predicting their long-term growth by training various machine learning models on strain and temperature data.</p>
+            <div class="tags">
+              <span class="tag">Structural Health Monitoring</span>
+              <span class="tag">Machine Learning</span>
+              <span class="tag">Python</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+
+    <!-- Projects list -->
+    <section aria-labelledby="projectsHeading">
+      <div class="section-header">
+        <h2 id="projectsHeading">Projects</h2>
+      </div>
+
+      <div class="projects" id="projectsList">
+        <!-- Project 1 (3D FEM Solver) -->
+        <a class="project-card" href="https://github.com/bryboyd/3D-FEM-Solver/tree/main"
+           target="_blank" rel="noopener noreferrer"
+           data-id="proj-fem" data-title="3D FEM Solver for Structures Under Body and Traction Loads">
+          <div class="left">
+            <!-- image replacing two-letter box; larger -->
+            <img src="towerFEM.png" alt="3D FEM Solver thumbnail" />
+          </div>
+          <div class="meta">
+            <h3>3D FEM Solver for Structures Under Body and Traction Loads</h3>
+            <p>Application for solving a 3D finite element methods problem for a structure under body and traction loads. Code is also provided to check solution using patch test and method of manufactured solutions. Demonstrated using 3D model of the Duke Chapel tower.</p>
+            <div class="tags">
+              <span class="tag">Matlab</span>
+              <span class="tag">FEM</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Project 2 -->
+        <a class="project-card" href="https://github.com/bryboyd/Compressed-Sensing-Image-Recovery" target="_blank" rel="noopener noreferrer"
+           data-id="proj-cis" data-title="Compressed Image Sensing Recovery">
+          <div class="left">
+            <img src="imagerecovery.png" alt="Compressed Image Sensing thumbnail" />
+          </div>
+          <div class="meta">
+            <h3>Compressed Image Sensing Recovery</h3>
+            <p>An algorithm which restores an image with corrupted/missing pixels, by using LASSO regression and random subsets cross validation to estimate the pixel color for black and white images.</p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">Machine Learning</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Project 3 -->
+        <a class="project-card" href="https://github.com/bryboyd/Brain-Computer-Interface" target="_blank" rel="noopener noreferrer"
+           data-id="proj-bci" data-title="Brain-Computer Interface Movement Decoding">
+          <div class="left">
+            <img src="brain.png" alt="Brain-Computer Interface thumbnail" />
+          </div>
+          <div class="meta">
+            <h3>Brain-Computer Interface Movement Decoding</h3>
+            <p>An algorithm using a support vector machine (SVM) with Two-Level cross-validation to determine whether someone using a brain-computer interface (BCI) intends to select a “left” or “right” movement.</p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">Machine Learning</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Project 4 -->
+        <a class="project-card" href="https://github.com/bryboyd/TR-NewtonCG" target="_blank" rel="noopener noreferrer"
+           data-id="proj-trncg" data-title="Trust-Region Newton-Conjugate-Gradient Optimizer in Deep Learning">
+          <div class="left">
+            <img src="TR.png" alt="Trust-Region Newton-CG thumbnail" />
+          </div>
+          <div class="meta">
+            <h3>Trust-Region Newton-Conjugate-Gradient Optimizer in Deep Learning</h3>
+            <p>Integration of a trust region Newton CG optimizer in PyTorch, and compared results with the standard Adam in approximating elementary functions as well as solution to a Physics-Informed Neural Network.</p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">Neural Networks</span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Passion projects -->
+      <div style="margin-top:22px;">
+        <h2 style="font-size:18px; margin:0 0 12px 0;">Fun Stuff</h2>
+        <div class="passion">
+          <div class="card">
+            <h4>Crossword Puzzles</h4>
+            <p>Over the past years I have published many crossword puzzles in The Daily Princetonian, and served as an assistant Puzzles Editor during my junior and senior year. I am currently working on more crosswords to submit to various newspapers, and hopefully one day the NY times!</p>
+            <!-- Image displayed under the text -->
+            <img src="crossword.png" alt="Crossword puzzles preview">
+          </div>
+
+          <div class="card">
+            <h4>Science Olympiad Tests</h4>
+            <p>Throughout college I have volunteered at many Princeton University Science Olympiad competitions, and have written exams for that competition as well as the MIT invitational, UT Austin invitational and Texas regional competitions, in events like Sounds of Music and Detector Building.</p>
+            <img src="scioly.png" alt="Science Olympiad materials preview">
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer>
+    </footer>
+  </main>
+
+  <!-- Edit Links Overlay (kept for compatibility; no visible trigger) -->
+  <div class="overlay" id="overlay" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="panel" role="document" aria-labelledby="editLinksTitle">
+      <h3 id="editLinksTitle">Edit project links</h3>
+      <p class="note">Update the link for any research project. Leave blank or "#" to disable the link.</p>
+
+      <div id="linksForm">
+        <!-- Rows are injected by JS if used -->
+      </div>
+
+      <div class="actions">
+        <button id="cancelEdit" class="btn ghost small">Cancel</button>
+        <button id="saveEdit" class="btn small">Save changes</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Links updated</div>
+
+<script>
+  // Set current year (footer)
+  const yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  // Helper: get all project anchors (includes research and project items)
+  function getProjectAnchors(){
+    return Array.from(document.querySelectorAll('.project-card[data-id]'));
+  }
+
+  // Build edit form rows (kept in case you want to open overlay manually)
+  const linksForm = document.getElementById('linksForm');
+  function buildForm(){
+    if(!linksForm) return;
+    linksForm.innerHTML = '';
+    getProjectAnchors().forEach(a => {
+      const id = a.dataset.id;
+      const title = a.dataset.title || a.querySelector('h3')?.textContent || id;
+      const href = a.getAttribute('href') || '';
+      const row = document.createElement('div');
+      row.className = 'link-row';
+      row.innerHTML = `
+        <label for="input-${id}">${title}</label>
+        <input id="input-${id}" type="url" placeholder="https://example.com" value="${href === '#' ? '' : href}">
+      `;
+      linksForm.appendChild(row);
+    });
+  }
+
+  // Overlay open/close helpers (no visible button provided — functions remain if you later add a trigger)
+  const overlay = document.getElementById('overlay');
+  function openOverlay(){
+    if(!overlay) return;
+    buildForm();
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    setTimeout(()=> {
+      const first = linksForm?.querySelector('input');
+      if(first) first.focus();
+    }, 120);
+  }
+  function closeOverlay(){
+    if(!overlay) return;
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+  }
+  const cancelBtn = document.getElementById('cancelEdit');
+  if(cancelBtn) cancelBtn.addEventListener('click', closeOverlay);
+  if(overlay){
+    overlay.addEventListener('click', (e) => {
+      if(e.target === overlay) closeOverlay();
+    });
+  }
+
+  // Save edits: update anchors' hrefs (works if overlay is used)
+  const saveBtn = document.getElementById('saveEdit');
+  if(saveBtn){
+    saveBtn.addEventListener('click', () => {
+      getProjectAnchors().forEach(a => {
+        const id = a.dataset.id;
+        const input = document.getElementById('input-' + id);
+        if(!input) return;
+        let val = input.value.trim();
+        if(val === '') val = '#';
+        // Basic validation for URLs: allow '#' or absolute URLs (http/https)
+        if(val !== '#' && !/^https?:\/\//i.test(val)){
+          // prepend https:// if looks like domain (simple heuristic)
+          val = 'https://' + val;
+        }
+        a.setAttribute('href', val);
+      });
+      showToast('Links updated');
+      closeOverlay();
+    });
+  }
+
+  // Small toast
+  const toast = document.getElementById('toast');
+  let toastTimer = null;
+  function showToast(msg, ms=1800){
+    if(!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=> toast.classList.remove('show'), ms);
+  }
+
+  // Make sure clicking an anchor with href="#" doesn't navigate
+  document.querySelectorAll('.project-card').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const href = a.getAttribute('href');
+      if(!href || href === '#'){
+        e.preventDefault();
+        // optional: show a small message
+        showToast('No link set — use the editor to add one', 1400);
+      }
+    });
+  });
+
+  // keyboard: close overlay on Escape
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && overlay && overlay.classList.contains('open')) closeOverlay();
+  });
+</script>
+</body>
+</html>
